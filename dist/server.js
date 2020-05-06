@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const bearerToken = require('express-bearer-token');
 const auth_1 = require("./service/auth");
 const subjectService_1 = require("./service/subjectService");
 const groupService_1 = require("./service/groupService");
