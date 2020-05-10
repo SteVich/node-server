@@ -5,6 +5,9 @@ import {router as authRouter} from './service/auth'
 import {router as subjectRouter} from './service/subjectService'
 import {router as groupRouter} from './service/groupService'
 import {router as adminRouter} from './service/adminsService'
+import multer from "multer";
+
+var upload = multer();
 
 const app = express()
     .use(cors())
@@ -12,7 +15,8 @@ const app = express()
     .use(authRouter)
     .use(subjectRouter)
     .use(groupRouter)
-    .use(adminRouter);
+    .use(adminRouter)
+    .use(upload.array());
 
 
 app.use(function(req, res, next) {
