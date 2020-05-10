@@ -12,13 +12,17 @@ const typeOrmConfig: PostgresConnectionOptions = {
     password: "b2d2b385d02e83bf524e2a5caf62a0d22555aaa0e60e84fd5f925e1f1244df78",
     database: "dapfabilptiap1",
     synchronize: true,
+    keepConnectionAlive: true,
     logging: false,
     entities: [
         User,
         Subject,
         Group,
         Specialty
-    ]
+    ],
+    extra: {
+        "connectionLimit": 10
+    }
 };
 
 export { typeOrmConfig };
