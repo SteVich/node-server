@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response, Router} from 'express';
 import {typeOrmConfig} from "../config";
-import {createConnection} from "typeorm";
+import {createConnection, getConnectionManager} from "typeorm";
 import {User} from "../model/user";
 import {Specialty} from "../model/specialty";
 
@@ -24,7 +24,10 @@ router.post('/admin/createTeacher', async function (req: Request, res: Response,
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -45,7 +48,10 @@ router.post('/admin/confirmStudents', async function (req: Request, res: Respons
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -69,7 +75,10 @@ router.post('/admin/specialty', async function (req: Request, res: Response, nex
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -85,7 +94,10 @@ router.get('/admin/futureTeachers', async function (req: Request, res: Response,
             res.send(result);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -101,7 +113,10 @@ router.get('/admin/futureStudents', async function (req: Request, res: Response,
             res.send(result);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -117,7 +132,10 @@ router.get('/admin/specialties', async function (req: Request, res: Response, ne
             res.send(result);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 

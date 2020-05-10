@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response, Router} from 'express';
-import {createConnection} from "typeorm";
+import {createConnection, getConnectionManager} from "typeorm";
 import {typeOrmConfig} from "../config";
 import {User} from "../model/user";
 
@@ -18,7 +18,10 @@ router.get('/user/:username', async function (req: Request, res: Response, next:
             res.send(allUsers);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 })
 
@@ -35,7 +38,10 @@ router.get('/user/:email', async function (req: Request, res: Response, next: Ne
             res.send(allUsers);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -54,7 +60,10 @@ router.get('/user/:id', async function (req: Request, res: Response, next: NextF
             res.send(allUsers);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -97,7 +106,10 @@ router.post('/registration', async function (req: Request, res: Response, next: 
         })();
 
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 
 });
@@ -115,7 +127,10 @@ router.get('/users', async function (req: Request, res: Response, next: NextFunc
             res.send(allUsers);
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 

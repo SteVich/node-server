@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response, Router} from 'express';
 import {Subject} from "../model/subject";
 import {typeOrmConfig} from "../config";
-import {createConnection} from "typeorm";
+import {createConnection, getConnectionManager} from "typeorm";
 import {User} from "../model/user";
 import {Group} from "../model/group";
 
@@ -31,7 +31,10 @@ router.post('/subject', async function (req: Request, res: Response, next: NextF
             }
         )();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -50,7 +53,10 @@ router.post('/subject/:id', async function (req: Request, res: Response, next: N
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -103,7 +109,10 @@ router.post('/addGroupToSubject', async function (req: Request, res: Response, n
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -120,6 +129,9 @@ router.get('/groupsFromSubject', async function (req: Request, res: Response, ne
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });

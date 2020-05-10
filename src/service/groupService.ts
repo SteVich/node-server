@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response, Router} from 'express';
 import {typeOrmConfig} from "../config";
-import {createConnection} from "typeorm";
+import {createConnection, getConnectionManager} from "typeorm";
 import {Group} from "../model/group";
 import {User} from "../model/user";
 
@@ -27,7 +27,10 @@ router.post('/group', async function (req: Request, res: Response, next: NextFun
             }
         )();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -62,7 +65,10 @@ router.get('/groups', async function (req: Request, res: Response, next: NextFun
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -78,7 +84,10 @@ router.get('/allStudentsFromGroup', async function (req: Request, res: Response,
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -106,7 +115,10 @@ router.get('/allStudents', async function (req: Request, res: Response, next: Ne
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
 
@@ -125,6 +137,9 @@ router.put('/updateStudentMark', async function (req: Request, res: Response, ne
             await conn.close();
         })();
     } catch (err) {
-        return next(err);
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (err.name === "AlreadyHasActiveConnectionError") {
+            return getConnectionManager().get("default");
+        }
     }
 });
