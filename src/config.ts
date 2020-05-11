@@ -6,11 +6,11 @@ import {Specialty} from "./model/specialty";
 
 const typeOrmConfig: PostgresConnectionOptions = {
     type: "postgres",
-    host: "ec2-54-246-87-132.eu-west-1.compute.amazonaws.com",
+    host: "ec2-46-137-84-140.eu-west-1.compute.amazonaws.com",
     port: 5432,
-    username: "zrhncsonbavazm",
-    password: "b2d2b385d02e83bf524e2a5caf62a0d22555aaa0e60e84fd5f925e1f1244df78",
-    database: "dapfabilptiap1",
+    username: "axblpefsjqxjoo",
+    password: "56bd0b2011943a3640f32d29d680c093b65a4b685596113da259c45d97f7f2cc",
+    database: "d655ptdtso1nj0",
     synchronize: false,
     logging: false,
     entities: [
