@@ -37,9 +37,6 @@ router.post('/admin/confirmStudents', async function (req: Request, res: Respons
             const conn = await createConnection(typeOrmConfig);
             const repository = conn.getRepository(User);
 
-            console.log(req.body)
-            console.log(req.body[0])
-
             for (const e of req.body) {
                 let user = await repository.findOne({id: e.id});
                 user.isActive = true;

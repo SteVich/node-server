@@ -67,7 +67,7 @@ router.get('/subjects', async function (req: Request, res: Response, next: NextF
 
             const repository = conn.getRepository(Subject);
             const allSubjects = await repository.find();
-            console.log(allSubjects)
+
             res.send(allSubjects);
             await conn.close();
         })();
