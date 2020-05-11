@@ -72,13 +72,16 @@ router.get('/groups', async function (req: Request, res: Response, next: NextFun
     }
 });
 
-router.get('/allStudentsFromGroup', async function (req: Request, res: Response, next: NextFunction) {
+router.get('/allStudentsFromGroup/:id', async function (req: Request, res: Response, next: NextFunction) {
     try {
         (async () => {
             const conn = await createConnection(typeOrmConfig);
-
             const repository = conn.getRepository(Group);
-            const group = await repository.findOne({id: req.body.id});
+
+            var x = req.params.id;
+            var y = +x;
+
+            const group = await repository.findOne({id: y});
             res.send(group.users);
 
             await conn.close();

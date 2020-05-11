@@ -116,16 +116,18 @@ router.post('/addGroupToSubject', async function (req: Request, res: Response, n
     }
 });
 
-router.get('/groupsFromSubject', async function (req: Request, res: Response, next: NextFunction) {
+router.get('/groupsFromSubject/:id', async function (req: Request, res: Response, next: NextFunction) {
     try {
         (async () => {
             const conn = await createConnection(typeOrmConfig);
             const repository = conn.getRepository(Subject);
 
-            const subject = await repository.findOne({id: req.body.id});
-            console.log(subject.groups)
-            res.send(subject.groups);
+            var x = req.params.id;
+            var y = +x;
 
+            const subject = await repository.findOne({id: y});
+
+            res.send(subject.groups);
             await conn.close();
         })();
     } catch (err) {

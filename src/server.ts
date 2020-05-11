@@ -21,25 +21,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use(function (req, res, next) {
-    var origins = [
-        'localhost:8080',
-        'https://univer-sv.herokuapp.com'
-    ];
-
-    for(var i = 0; i < origins.length; i++){
-        var origin = origins[i];
-
-        if(req.headers.origin.indexOf(origin) > -1){
-            res.header('Access-Control-Allow-Origin', req.headers.origin);
-        }
-    }
-
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
 const port = process.env.PORT || 8000;
 
 app.listen(port, function() {
